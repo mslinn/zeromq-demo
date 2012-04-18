@@ -98,6 +98,8 @@ class HeapAlerter extends Actor with ActorLogging {
           if (count > 10) log.warning("Need more memory, using {} %", (100.0 * used / max))
         case Left(e) ⇒ throw e
       }
+
+    case m => println("HeapAlerter got a " + m)
   }
 }
 
