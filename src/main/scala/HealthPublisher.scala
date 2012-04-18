@@ -74,7 +74,7 @@ class Logger extends Actor with ActorLogging {
         case Left(e) ⇒ throw e
       }
 
-    case x => println("Logger got a " + m)
+    case m => println("Logger got a " + m)
   }
 }
 
