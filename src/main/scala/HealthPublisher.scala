@@ -19,15 +19,18 @@ class HealthProbe extends Actor {
   val ser = SerializationExtension(context.system)
 
   override def preStart() {
+    println("Entered HealthProbe preStart()")
     context.system.scheduler.schedule(1 second, 1 second, self, Tick)
   }
 
   override def postRestart(reason: Throwable) {
+    println("Entered HealthProbe postRestart()")
     // don't call preStart, only schedule once
   }
 
   def receive: Receive = {
     case Tick ⇒
+      println("HealthProbe got a Tick")
       val currentHeap = memory.getHeapMemoryUsage
       val timestamp = System.currentTimeMillis
 
@@ -53,6 +56,7 @@ class Logger extends Actor with ActorLogging {
   def receive = {
     // the first frame is the topic, second is the message
     case m: ZMQMessage if m.firstFrameAsString == "health.heap" ⇒
+      println("Logger got a ZMQmessage for health.heap")
       ser.deserialize(m.payload(1), classOf[Heap]) match {
         case Right(Heap(timestamp, used, max)) ⇒
           log.info("Used heap {} bytes, at {}", used, timestampFormat.format(new Date(timestamp)))
@@ -60,6 +64,7 @@ class Logger extends Actor with ActorLogging {
       }
 
     case m: ZMQMessage if m.firstFrameAsString == "health.load" ⇒
+      println("HealthProbe got a Tick health.load")
       ser.deserialize(m.payload(1), classOf[Load]) match {
         case Right(Load(timestamp, loadAverage)) ⇒
           log.info("Load average {}, at {}", loadAverage, timestampFormat.format(new Date(timestamp)))
@@ -79,6 +84,7 @@ class HeapAlerter extends Actor with ActorLogging {
   def receive = {
     // the first frame is the topic, second is the message
     case m: ZMQMessage if m.firstFrameAsString == "health.heap" ⇒
+      println("HeapAlerter got a ZMQMessage for health.heap")
       ser.deserialize(m.payload(1), classOf[Heap]) match {
         case Right(Heap(timestamp, used, max)) ⇒
           if ((used.toDouble / max) > 0.9) count += 1
