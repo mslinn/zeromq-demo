@@ -1,6 +1,11 @@
 Working version (eventually) of [Akka 2.0 ZeroMQ sample code](http://doc.akka.io/docs/akka/2.0/scala/zeromq.html).
 
-Before the program can run, ZeroMQ needs to be built and installed. On Windows 64 bit, this is painful. On Ubuntu, it is easy:
+Before the program can run, ZeroMQ needs to be built and installed. On Windows 64 bit, this is painful.
+Happily, there are two prebuilt packages to download:
+[ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe)
+[JZQMQ Win64](http://miru.hk/archive/JZMQ-2.1.10-win64.exe)
+
+On Ubuntu, it is easy to build:
 
 ````
 git clone git://github.com/zeromq/libzmq.git
@@ -13,7 +18,7 @@ sudo mv src/.libs/libzmq.so /usr/lib
 sudo ldconfig -v
 ````
 
-On Mac it is even easier:
+On Mac it is also easy:
 
 ````
 brew install zeromq
