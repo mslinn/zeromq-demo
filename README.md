@@ -17,6 +17,13 @@ On Mac it is even easier:
 
 ````
 brew install zeromq
+...
+To install the zmq gem on 10.6 with the system Ruby on a 64-bit machine, you may need to do:
+
+    ARCHFLAGS="-arch x86_64" gem install zmq -- --with-zmq-dir=/usr/local
+
+If you want to build the Java bindings from https://github.com/zeromq/jzmq
+you will need the Java Developer Package from http://connect.apple.com/
 ````
 
 If running from IntelliJ or Eclipse, launch the programs from <tt>target/scala-2.9.1-1/classes</tt> so <tt>application.conf</tt> and <tt>common.conf</tt> are found.
