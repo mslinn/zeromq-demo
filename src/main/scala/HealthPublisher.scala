@@ -37,11 +37,13 @@ class HealthProbe extends Actor {
       // use akka SerializationExtension to convert to bytes
       val heapPayload = ser.serialize(Heap(timestamp, currentHeap.getUsed, currentHeap.getMax)).fold(throw _, identity)
       // the first frame is the topic, second is the message
+      println("HealthProbe about to publish health.heap")
       pubSocket ! ZMQMessage(Seq(Frame("health.heap"), Frame(heapPayload)))
 
       // use akka SerializationExtension to convert to bytes
       val loadPayload = ser.serialize(Load(timestamp, os.getSystemLoadAverage)).fold(throw _, identity)
       // the first frame is the topic, second is the message
+      println("HealthProbe about to publish health.load")
       pubSocket ! ZMQMessage(Seq(Frame("health.load"), Frame(loadPayload)))
   }
 }
@@ -49,6 +51,7 @@ class HealthProbe extends Actor {
 /** Subscriber that logs the information.
  * It subscribes to all topics starting with "health", i.e. both Heap and Load events. */
 class Logger extends Actor with ActorLogging {
+  println("Logger about to subscribe to health")
   context.system.newSocket(SocketType.Sub, Listener(self), Connect("tcp://127.0.0.1:1235"), Subscribe("health"))
   val ser = SerializationExtension(context.system)
   val timestampFormat = new SimpleDateFormat("HH:mm:ss.SSS")
@@ -64,12 +67,14 @@ class Logger extends Actor with ActorLogging {
       }
 
     case m: ZMQMessage if m.firstFrameAsString == "health.load" ⇒
-      println("HealthProbe got a Tick health.load")
+      println("Logger got a ZMQMessage health.load")
       ser.deserialize(m.payload(1), classOf[Load]) match {
         case Right(Load(timestamp, loadAverage)) ⇒
           log.info("Load average {}, at {}", loadAverage, timestampFormat.format(new Date(timestamp)))
         case Left(e) ⇒ throw e
       }
+
+    case x => println("Logger got a " + m)
   }
 }
 
@@ -77,6 +82,7 @@ class Logger extends Actor with ActorLogging {
 /** Subscriber keeps track of used heap and warns if too much heap is used.
   * It only subscribes to Heap events. */
 class HeapAlerter extends Actor with ActorLogging {
+  println("HeapAlerter about to subscribe to health.heap")
   context.system.newSocket(SocketType.Sub, Listener(self), Connect("tcp://127.0.0.1:1235"), Subscribe("health.heap"))
   val ser = SerializationExtension(context.system)
   var count = 0
@@ -98,6 +104,6 @@ class HeapAlerter extends Actor with ActorLogging {
 object Main extends App {
   val system = ActorSystem()
   val healthProbeActor = system.actorOf(Props[HealthProbe], name = "health")
-  val loggerActor      = system.actorOf(Props[Logger], name = "logger")
+  val loggerActor      = system.actorOf(Props[Logger],      name = "logger")
   val heapAlerterActor = system.actorOf(Props[HeapAlerter], name = "alerter")
 }
