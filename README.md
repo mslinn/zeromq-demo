@@ -2,7 +2,7 @@ Working version (eventually) of [Akka 2.0 ZeroMQ sample code](http://doc.akka.io
 
 Before the program can run, ZeroMQ needs to be built and installed. On Windows 64 bit, this is painful.
 Happily, there are two prebuilt packages to download:
-[ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe)
+[ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe) &bull;
 [JZQMQ Win64](http://miru.hk/archive/JZMQ-2.1.10-win64.exe)
 
 On Ubuntu, it is easy to build:
