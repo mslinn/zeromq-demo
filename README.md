@@ -8,9 +8,9 @@ Happily, there are two prebuilt packages to download:
 On Ubuntu, it is easy to build:
 
 ````
+sudo apt-get install libtool autoconf automake uuid-dev e2fsprogs
 git clone git://github.com/zeromq/libzmq.git
 cd libzmq
-sudo apt-get install libtool autoconf automake uuid-dev e2fsprogs
 #less README
 #less INSTALL
 ./autogen.sh && ./configure && make && sudo make install
