@@ -20,6 +20,7 @@ sudo aptitude install libzmq-dev
 ````
 
 ### Building from source
+First build ZeroMQ.
 
 ````
 sudo apt-get install libtool autoconf automake uuid-dev e2fsprogs
@@ -27,30 +28,26 @@ git clone git://github.com/zeromq/libzmq.git
 cd libzmq
 #less README
 #less INSTALL
-./autogen.sh && ./configure && make && sudo make install
+./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
 sudo cp src/.libs/libzmq.so /usr/lib
 sudo ldconfig
+ls -al /usr/local/lib/libzmq.*
 cd ..
-# Now build the Java bindings.
+````
+
+Now build the Java bindings.
+
+````
 # Verify that JAVA_HOME environment variable is correctly set
 echo $JAVA_HOME/bin/java
 # Clone the github repository for the ZeroMQ Java bindings and build the project
 git clone https://github.com/zeromq/jzmq.git
 cd jzmq
-./configure
-make
-dpkg-buildpackage -rfakeroot
-# You should now have <tt>jzmq_[some-version]_i386.deb</tt> package in the parent directory
-cd ..
-ls jzmq*
-# Verify that the JNI library path in your JVM command line: use -Djava.library.path=/usr/lib
-# /usr/lib should contain libjzmq.so, verify that you can see it:
-dpkg -L jzmq
-# libjzmq.jar should now be in /usr/share/java/
-ls /usr/share/java/libjzmq.jar
-# Install the ZeroMQ Java bindings:
-dpkg -i jzmq_[some-version]_i386.deb
+./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
+ls -al /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
+
+You should see <tt>/usr/local/share/java/zmq.jar</tt>.
 
 ## Mac
 On Mac it is also easy to build from source:
@@ -58,12 +55,15 @@ On Mac it is also easy to build from source:
 ````
 brew install zeromq
 ...
+This message appears:
 To install the zmq gem on 10.6 with the system Ruby on a 64-bit machine, you may need to do:
 
 ARCHFLAGS="-arch x86_64" gem install zmq -- --with-zmq-dir=/usr/local
 
 If you want to build the Java bindings from https://github.com/zeromq/jzmq
 you will need the Java Developer Package from http://connect.apple.com/
+
+Other (simpler) instructions are here: https://github.com/zeromq/jzmq/issues/29
 ````
 
 If running from IntelliJ or Eclipse, launch the programs from <tt>target/scala-2.9.1-1/classes</tt> so <tt>application.conf</tt> and <tt>common.conf</tt> are found.
