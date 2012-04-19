@@ -14,7 +14,7 @@ cd libzmq
 #less README
 #less INSTALL
 ./autogen.sh && ./configure && make && sudo make install
-sudo mv src/.libs/libzmq.so /usr/lib
+sudo cp src/.libs/libzmq.so /usr/lib
 sudo ldconfig -v
 ````
 
