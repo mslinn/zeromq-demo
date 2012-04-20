@@ -35,7 +35,7 @@ ls -al /usr/local/lib/libzmq.*
 cd ..
 ````
 
-Now build the Java bindings.
+Now build the jar containing Java bindings (<tt>zmq.jar</tt>), or use <tt>lib/zmq.jar</tt> from this project.
 
 ````
 # Verify that JAVA_HOME environment variable is correctly set
@@ -47,14 +47,9 @@ cd jzmq
 ls -al /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
 
-Ideally, typesafe or Sonatype shold host zmq.jar in their repository. Until then, you could host in your repo, or 
-just copy the jar with the Java bindings to your sbt project's <tt>lib/</tt> directory, where unmanaged dependencies live:
-
-````
-cd $mySbtProject
-mkdir lib
-cp /usr/local/share/java/zmq.jar lib
-````
+Ideally, Typesafe or Sonatype shold host the jar containing the Java bindings (<tt>zmq.jar</tt>) in one of their repositories.
+Until then, you could host <tt>zmq.jar</tt> in your own repo, or just copy to your sbt project's <tt>lib/</tt> directory, where unmanaged dependencies live.
+For now, the Java bindings are checked into this project as <tt>lib/zmq.jar</tt>.
 
 ## Mac
 On Mac it is also easy to build from source:
@@ -74,8 +69,27 @@ Other (simpler) instructions are here: https://github.com/zeromq/jzmq/issues/29
 ````
 
 If running from IntelliJ or Eclipse, launch the programs from <tt>target/scala-2.9.1-1/classes</tt> so <tt>application.conf</tt> and <tt>common.conf</tt> are found.
-To run from sbt:
+You will also need to add an OS-specific definion to VM Options in your Run/Debug configuration.
+For Linux, the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
+
+If you prefer to launch from <tt>sbt</tt>, modify your <tt>sbt</tt> script so as to add a parameter called <tt>$JAVA_OPTS</tt>.
+Here is my <tt>sbt</tt> script, which will work on any OS:
 
 ````
+java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M $JAVA_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+````
+
+To run the program, first set <tt>java.library.path</tt>; this is an OS-specific setting.
+Here is the proper setting for Linux:
+
+````
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
 sbt run
+````
+
+You could also hard-code the setting for <tt>java.library.path</tt> into <tt>sbt</tt>, which would mean that your <tt>sbt</tt> script would be OS specific.
+Here is a script with the proper setting for Linux:
+
+````
+java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M -Djava.library.path=/usr/local/lib -jar `dirname $0`/sbt-launch.jar "$@"
 ````
