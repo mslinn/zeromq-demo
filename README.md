@@ -114,6 +114,12 @@ $ sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher'
 [info] Loading project definition from /home/mslinn/work/zeromq-demo/project
 [info] Set current project to zeroMQBenchmark (in build file:/home/mslinn/work/zeromq-demo/)
 [info] Running com.micronautics.zeromq.benchmark.HealthPublisher
+[ERROR] [04/20/2012 22:22:30.612] [default-akka.actor.default-dispatcher-2] [akka://default/user/health] Throughput: 5582 messages/second; 98 bytes/message; total 547036 bytes/second
+[ERROR] [04/20/2012 22:22:31.611] [default-akka.actor.default-dispatcher-6] [akka://default/user/health] Throughput: 9963 messages/second; 98 bytes/message; total 976374 bytes/second
+[ERROR] [04/20/2012 22:22:32.477] [default-akka.actor.default-dispatcher-5] [akka://default/user/health] Throughput: 11546 messages/second; 98 bytes/message; total 1131508 bytes/second
+[ERROR] [04/20/2012 22:22:33.350] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 11448 messages/second; 98 bytes/message; total 1121904 bytes/second
+[ERROR] [04/20/2012 22:22:34.210] [default-akka.actor.default-dispatcher-4] [akka://default/user/health] Throughput: 11626 messages/second; 98 bytes/message; total 1139348 bytes/second
+[ERROR] [04/20/2012 22:22:35.274] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 9403 messages/second; 98 bytes/message; total 921494 bytes/second
 ...
 ````
 
@@ -170,5 +176,5 @@ The throughput computation is written so it does not average long term.
 Instead, it reports the instantaneous throughput since the last report.
 You should see results of changing loads right away, without lag.
 
-WARNING: If you are testing on an AWS micro instance, they have only one CPU, plus a peculiar burst characteristic that will screw up measurements big time.
+WARNING: If you are testing on an AWS micro instance, be aware that they have only one CPU, plus a peculiar burst characteristic that will screw up measurements big time.
 Instead, test with a medium or large instance.
