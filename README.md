@@ -87,3 +87,33 @@ Here is a script with the proper setting for Linux:
 ````
 java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M -Djava.library.path=/usr/local/lib -jar `dirname $0`/sbt-launch.jar "$@"
 ````
+
+### Go, Baby!
+````
+$ sbt run
+[info] Loading global plugins from /home/mslinn/.sbt/plugins
+[info] Loading project definition from /home/mslinn/work/zeromq-demo/project
+[info] Set current project to zeroMQDemo (in build file:/home/mslinn/work/zeromq-demo/)
+[info] Running Main
+Logger about to subscribe to health
+HeapAlerter about to subscribe to health.heap
+HeapAlerter got a Connecting
+Entered HealthProbe preStart()
+Logger got a Connecting
+HealthProbe got a Tick
+HealthProbe about to publish health.heap
+HeapAlerter got a ZMQMessage for health.heap
+Logger got a ZMQmessage for health.heap
+[INFO] [04/20/2012 00:28:27.23] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 9697856 bytes, at 00:28:27.011
+HealthProbe about to publish health.load
+Logger got a ZMQMessage health.load
+[INFO] [04/20/2012 00:28:27.28] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.11, at 00:28:27.011
+HealthProbe got a Tick
+HealthProbe about to publish health.heap
+HeapAlerter got a ZMQMessage for health.heap
+Logger got a ZMQmessage for health.heap
+[INFO] [04/20/2012 00:28:28.112] [default-akka.actor.default-dispatcher-5] [akka://default/user/logger] Used heap 10106240 bytes, at 00:28:28.110
+HealthProbe about to publish health.load
+Logger got a ZMQMessage health.load
+[INFO] [04/20/2012 00:28:28.113] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.02, at 00:28:28.110
+````
