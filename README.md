@@ -165,3 +165,10 @@ $ sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
 
 If you want run the programs quietly, modify <tt>application.conf</tt> to contain <tt>loglevel = "ERROR"</tt>.
 You should do this when running a benchmark test.
+
+The throughput computation is written so it does not average long term.
+Instead, it reports the instantaneous throughput since the last report.
+You should see results of changing loads right away, without lag.
+
+WARNING: If you are testing on an AWS micro instance, they have only one CPU, plus a peculiar burst characteristic that will screw up measurements big time.
+Instead, test with a medium or large instance.
