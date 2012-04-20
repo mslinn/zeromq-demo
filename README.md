@@ -96,7 +96,7 @@ export JAVA_OPTS=-Djava.library.path=/usr/local/lib
 sbt 'run-main com.micronautics.zeromq.benchmark.LogSubscriber'
 ````
 
-You could also hard-code the setting for <tt>java.library.path</tt> into <tt>sbt</tt>, which would mean that your <tt>sbt</tt> script would be OS specific.
+You could also hard-code the setting for <tt>java.library.path</tt> into <tt>sbt</tt>, which would mean that your <tt>sbt</tt> script would be OS-specific.
 Here is a script with the proper setting for Linux:
 
 ````
@@ -137,3 +137,28 @@ Logger got a Connecting
 ````
 
 <tt>HeapSubscriber</tt> won't generate output unless there is a problem, or the log level is increased to debug.
+<tt>src/main/resources/application.conf-</tt> has been provided to make this easy.
+Simply rename that file and start the apps that you want to run with debug logging enabled, as follows:
+
+````
+mv src/main/resources/application.conf{-,}
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
+sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
+$ sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
+[info] Loading global plugins from /home/mslinn/.sbt/plugins
+[info] Loading project definition from /home/mslinn/work/zeromq-demo/project
+[info] Set current project to zeroMQBenchmark (in build file:/home/mslinn/work/zeromq-demo/)
+[info] Running com.micronautics.zeromq.benchmark.HeapSubscriber
+[DEBUG] [04/20/2012 20:42:58.493] [run-main] [EventStream(akka://default)] logger log1-Logging$DefaultLogger started
+[DEBUG] [04/20/2012 20:42:58.596] [run-main] [EventStream(akka://default)] Default Loggers started
+[DEBUG] [04/20/2012 20:42:58.596] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber about to subscribe to health.heap
+[DEBUG] [04/20/2012 20:42:58.813] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a Connecting
+[DEBUG] [04/20/2012 20:42:59.763] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+[DEBUG] [04/20/2012 20:42:59.764] [default-akka.actor.default-dispatcher-5] [akka.serialization.Serialization(akka://default)] Using serializer[akka.serialization.JavaSerializer] for message [com.micronautics.zeromq.Heap]
+[DEBUG] [04/20/2012 20:43:00.857] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+[DEBUG] [04/20/2012 20:43:01.957] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+[DEBUG] [04/20/2012 20:43:03.57] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+[DEBUG] [04/20/2012 20:43:04.157] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+[DEBUG] [04/20/2012 20:43:05.257] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
+...
+````
