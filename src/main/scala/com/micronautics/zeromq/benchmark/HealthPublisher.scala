@@ -16,6 +16,9 @@ class HealthPublisher extends Actor with ActorLogging {
   val memory = ManagementFactory.getMemoryMXBean
   val os = ManagementFactory.getOperatingSystemMXBean
   val ser = SerializationExtension(context.system)
+  var tick: Long = 0L
+  val tenSeconds: Long = 1000L * 10L
+  val startTime = System.currentTimeMillis
 
   override def preStart() {
     log.debug("Entered HealthPublisher preStart()")
@@ -30,6 +33,7 @@ class HealthPublisher extends Actor with ActorLogging {
   def receive: Receive = {
     case Tick ⇒
       log.debug("HealthPublisher got a Tick")
+      tick += 1
       val currentHeap = memory.getHeapMemoryUsage
       val timestamp = System.currentTimeMillis
 
@@ -44,6 +48,14 @@ class HealthPublisher extends Actor with ActorLogging {
       // the first frame is the topic, second is the message
       log.debug("HealthPublisher about to publish health.load")
       pubSocket ! ZMQMessage(Seq(Frame("health.load"), Frame(loadPayload)))
+      if (tick % tenSeconds == 0) {
+        val elapsedTime = System.currentTimeMillis() - startTime
+        log.error("Average throughput: %f messages per second".
+          format(tick.toDouble / elapsedTime.toDouble))
+      }
+
+    case m =>
+      log.debug(m.toString)
   }
 }
 
