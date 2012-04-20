@@ -17,12 +17,13 @@ class HealthPublisher extends Actor with ActorLogging {
   val os = ManagementFactory.getOperatingSystemMXBean
   val ser = SerializationExtension(context.system)
   var tick: Long = 0L
-  val tenSeconds: Long = 1000L * 10L
-  val startTime = System.currentTimeMillis
+  val tenSeconds: Long = 10L
+  var startTime = System.nanoTime
 
   override def preStart() {
     log.debug("Entered HealthPublisher preStart()")
-    context.system.scheduler.schedule(1 second, 1 second, self, Tick)
+    //context.system.scheduler.schedule(0 second, 1 second, self, Tick)
+    self ! Tick
   }
 
   override def postRestart(reason: Throwable) {
@@ -48,14 +49,21 @@ class HealthPublisher extends Actor with ActorLogging {
       // the first frame is the topic, second is the message
       log.debug("HealthPublisher about to publish health.load")
       pubSocket ! ZMQMessage(Seq(Frame("health.load"), Frame(loadPayload)))
-      if (tick % tenSeconds == 0) {
-        val elapsedTime = System.currentTimeMillis() - startTime
-        log.error("Average throughput: %f messages per second".
-          format(tick.toDouble / elapsedTime.toDouble))
-      }
+      if (tick % 10000 == 0)
+        log.error("Throughput: %d messages per second".format(throughput))
+      self ! Tick
 
     case m =>
       log.debug(m.toString)
+  }
+
+  def throughput = {
+    val elapsedSeconds = (System.nanoTime - startTime) / 1000000000.0
+    //log.error("elapsedSeconds=%f; tick=%d".format(elapsedSeconds, tick))
+    val speed = (tick.toDouble / elapsedSeconds).toLong
+    tick = 0
+    startTime = System.nanoTime
+    speed
   }
 }
 
