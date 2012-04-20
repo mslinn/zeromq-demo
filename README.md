@@ -164,3 +164,4 @@ $ sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
 ````
 
 If you want run the programs quietly, modify <tt>application.conf</tt> to contain <tt>loglevel = "ERROR"</tt>.
+You should do this when running a benchmark test.
