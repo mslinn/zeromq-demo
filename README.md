@@ -162,3 +162,5 @@ $ sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
 [DEBUG] [04/20/2012 20:43:05.257] [default-akka.actor.default-dispatcher-5] [akka://default/user/alerter] HeapSubscriber got a ZMQMessage for health.heap
 ...
 ````
+
+If you want run the programs quietly, modify <tt>application.conf</tt> to contain <tt>loglevel = "ERROR"</tt>.
