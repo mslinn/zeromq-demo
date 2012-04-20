@@ -49,8 +49,12 @@ class HealthPublisher extends Actor with ActorLogging {
       // the first frame is the topic, second is the message
       log.debug("HealthPublisher about to publish health.load")
       pubSocket ! ZMQMessage(Seq(Frame("health.load"), Frame(loadPayload)))
-      if (tick % 10000 == 0)
-        log.error("Throughput: %d messages per second".format(throughput))
+      if (tick % 10000 == 0) {
+        val mps = throughput
+        val bytes = heapPayload.length
+        val bytesPerSecond = mps * bytes
+        log.error("Throughput: %d messages/second; %d bytes/message; total %d bytes/second".format(mps, bytes, bytesPerSecond))
+      }
       self ! Tick
 
     case m =>
