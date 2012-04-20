@@ -1,4 +1,5 @@
 .classpath
+src/main/resources/application.conf
 *~
 .cache
 .idea/
