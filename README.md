@@ -114,12 +114,20 @@ $ sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher'
 [info] Loading project definition from /home/mslinn/work/zeromq-demo/project
 [info] Set current project to zeroMQBenchmark (in build file:/home/mslinn/work/zeromq-demo/)
 [info] Running com.micronautics.zeromq.benchmark.HealthPublisher
-[ERROR] [04/20/2012 22:22:30.612] [default-akka.actor.default-dispatcher-2] [akka://default/user/health] Throughput: 5582 messages/second; 98 bytes/message; total 547036 bytes/second
-[ERROR] [04/20/2012 22:22:31.611] [default-akka.actor.default-dispatcher-6] [akka://default/user/health] Throughput: 9963 messages/second; 98 bytes/message; total 976374 bytes/second
-[ERROR] [04/20/2012 22:22:32.477] [default-akka.actor.default-dispatcher-5] [akka://default/user/health] Throughput: 11546 messages/second; 98 bytes/message; total 1131508 bytes/second
-[ERROR] [04/20/2012 22:22:33.350] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 11448 messages/second; 98 bytes/message; total 1121904 bytes/second
-[ERROR] [04/20/2012 22:22:34.210] [default-akka.actor.default-dispatcher-4] [akka://default/user/health] Throughput: 11626 messages/second; 98 bytes/message; total 1139348 bytes/second
-[ERROR] [04/20/2012 22:22:35.274] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 9403 messages/second; 98 bytes/message; total 921494 bytes/second
+[ERROR] [04/20/2012 22:53:17.742] [default-akka.actor.default-dispatcher-5] [akka://default/user/health] Throughput: 6830 messages/sec; 98.0B/message; total 653.65KB/sec
+[ERROR] [04/20/2012 22:53:18.700] [default-akka.actor.default-dispatcher-8] [akka://default/user/health] Throughput: 10402 messages/sec; 98.0B/message; total 995.50KB/sec
+[ERROR] [04/20/2012 22:53:19.574] [default-akka.actor.default-dispatcher-1] [akka://default/user/health] Throughput: 11438 messages/sec; 98.0B/message; total 1.06MB/sec
+[ERROR] [04/20/2012 22:53:20.526] [default-akka.actor.default-dispatcher-6] [akka://default/user/health] Throughput: 10511 messages/sec; 98.0B/message; total 1005.93KB/sec
+[ERROR] [04/20/2012 22:53:21.485] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 10423 messages/sec; 98.0B/message; total 997.51KB/sec
+[ERROR] [04/20/2012 22:53:22.405] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 10864 messages/sec; 98.0B/message; total 1.01MB/sec
+[ERROR] [04/20/2012 22:53:23.286] [default-akka.actor.default-dispatcher-2] [akka://default/user/health] Throughput: 11355 messages/sec; 98.0B/message; total 1.06MB/sec
+[ERROR] [04/20/2012 22:53:24.141] [default-akka.actor.default-dispatcher-8] [akka://default/user/health] Throughput: 11690 messages/sec; 98.0B/message; total 1.09MB/sec
+[ERROR] [04/20/2012 22:53:25.116] [default-akka.actor.default-dispatcher-1] [akka://default/user/health] Throughput: 10258 messages/sec; 98.0B/message; total 981.72KB/sec
+[ERROR] [04/20/2012 22:53:26.6] [default-akka.actor.default-dispatcher-4] [akka://default/user/health] Throughput: 11235 messages/sec; 98.0B/message; total 1.05MB/sec
+[ERROR] [04/20/2012 22:53:26.909] [default-akka.actor.default-dispatcher-6] [akka://default/user/health] Throughput: 11079 messages/sec; 98.0B/message; total 1.03MB/sec
+[ERROR] [04/20/2012 22:53:27.799] [default-akka.actor.default-dispatcher-6] [akka://default/user/health] Throughput: 11236 messages/sec; 98.0B/message; total 1.05MB/sec
+[ERROR] [04/20/2012 22:53:28.712] [default-akka.actor.default-dispatcher-4] [akka://default/user/health] Throughput: 10956 messages/sec; 98.0B/message; total 1.02MB/sec
+[ERROR] [04/20/2012 22:53:29.615] [default-akka.actor.default-dispatcher-7] [akka://default/user/health] Throughput: 11087 messages/sec; 98.0B/message; total 1.03MB/sec
 ...
 ````
 
