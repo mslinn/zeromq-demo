@@ -1,4 +1,7 @@
-name := "ZeroMQ Demo"
+// see https://github.com/sbt/sbt-assembly
+import AssemblyKeys._ // put this at the top of the file
+
+name := "zeroMQDemo"
 
 version := "0.1"
 
@@ -21,3 +24,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %  "akka-testkit"               % "2.0.1" withSources(),
   "ch.qos.logback"    %  "logback-classic"            % "1.0.0"
 )
+
+seq(assemblySettings: _*)
+

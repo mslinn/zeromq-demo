@@ -47,7 +47,14 @@ cd jzmq
 ls -al /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
 
-You should see <tt>/usr/local/share/java/zmq.jar</tt>.
+Ideally, typesafe or Sonatype shold host zmq.jar in their repository. Until then, you could host in your repo, or 
+just copy the jar with the Java bindings to your sbt project's <tt>lib/</tt> directory, where unmanaged dependencies live:
+
+````
+cd $mySbtProject
+mkdir lib
+cp /usr/local/share/java/zmq.jar lib
+````
 
 ## Mac
 On Mac it is also easy to build from source:
