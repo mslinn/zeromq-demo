@@ -67,9 +67,10 @@ You will also need to add an OS-specific definion to VM Options in your Run/Debu
 For Linux, the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
 
 If you prefer to launch from <tt>sbt</tt>, modify your <tt>sbt</tt> script so as to add a parameter called <tt>$JAVA_OPTS</tt>.
-Here is my <tt>sbt</tt> script, which will work on any OS:
+Here is my <tt>sbt</tt> script, which will work on any OS that supports <tt>bash</tt>:
 
 ````
+#!/bin/bash
 java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M $JAVA_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 ````
 
@@ -78,19 +79,23 @@ Here is the proper setting for Linux:
 
 ````
 export JAVA_OPTS=-Djava.library.path=/usr/local/lib
-sbt run
+sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher' &
+sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber' &
+sbt 'run-main com.micronautics.zeromq.benchmark.LogSubscriber' &
 ````
 
 You could also hard-code the setting for <tt>java.library.path</tt> into <tt>sbt</tt>, which would mean that your <tt>sbt</tt> script would be OS specific.
 Here is a script with the proper setting for Linux:
 
 ````
+#!/bin/bash
 java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M -Djava.library.path=/usr/local/lib -jar `dirname $0`/sbt-launch.jar "$@"
 ````
 
-### Go, Baby!
+### Go, Baby, Go!
+After launching all three programs, output might look something like the following.
+
 ````
-$ sbt run
 [info] Loading global plugins from /home/mslinn/.sbt/plugins
 [info] Loading project definition from /home/mslinn/work/zeromq-demo/project
 [info] Set current project to zeroMQDemo (in build file:/home/mslinn/work/zeromq-demo/)

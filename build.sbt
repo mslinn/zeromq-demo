@@ -1,11 +1,11 @@
 // see https://github.com/sbt/sbt-assembly
 import AssemblyKeys._ // put this at the top of the file
 
-name := "zeroMQDemo"
+name := "zeroMQBenchmark"
 
-version := "0.1"
+version := "0.2"
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.9.1-1"
 
 scalacOptions ++= Seq("-deprecation")
 
