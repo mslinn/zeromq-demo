@@ -1,6 +1,6 @@
 Working version of [Akka 2.0 ZeroMQ sample code](http://doc.akka.io/docs/akka/2.0/scala/zeromq.html),
 implemented as three programs: a publisher and two subscribers.
-I added debug-level log statements so progress when running could be apparent.
+I added throughput display (messages/second and bytes/second), and debug-level log statements so progress when running could be apparent.
 
 Before the program can run, ZeroMQ and its (Java bindings)[http://www.zeromq.org/bindings:java] need to be built and installed. 
 
