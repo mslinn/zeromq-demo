@@ -9,6 +9,7 @@ import akka.zeromq.SocketType
 import akka.zeromq.ZMQMessage
 import java.lang.management.ManagementFactory
 import com.micronautics.zeromq.{Load, Heap, Tick}
+import com.micronautics.util.ByteFormatter
 import akka.actor._
 
 class HealthPublisher extends Actor with ActorLogging {
@@ -53,7 +54,7 @@ class HealthPublisher extends Actor with ActorLogging {
         val mps = throughput
         val bytes = heapPayload.length
         val bytesPerSecond = mps * bytes
-        log.error("Throughput: %d messages/second; %d bytes/message; total %d bytes/second".format(mps, bytes, bytesPerSecond))
+        log.error("Throughput: %d messages/sec; %s/message; total %s/sec".format(mps, ByteFormatter.format(bytes), ByteFormatter.format(bytesPerSecond)))
       }
       self ! Tick
 
