@@ -3,11 +3,6 @@ I added a bunch of prinlns so progress when running could be apparent.
 
 Before the program can run, ZeroMQ and its (Java bindings)[http://www.zeromq.org/bindings:java] need to be built and installed. 
 
-## Windows
-Building ZeroMQ on Windows 64 bit is painful. Happily, there are two prebuilt packages to download:
-[ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe) &bull;
-[JZQMQ Win64](http://miru.hk/archive/JZMQ-2.1.10-win64.exe)
-
 ## Ubuntu
 On Ubuntu, it is easy to build both packages from source, if you follow the proper recipe (below).
 You should build the [Java bindings repository](https://launchpad.net/~tuomjarv/+archive/jzmq) from source because the
@@ -60,10 +55,17 @@ You will also need <tt>zmq.jar</tt>; you could get it from this project.
 brew install zeromq
 ````
 
+## Windows
+Building ZeroMQ and the Java bindings on Windows 7 64 bit requires the non-free version of Visual C++.
+Here are instructions for building [ZeroMQ](http://www.zeromq.org/docs:windows-installations)
+and [Java bindings](http://www.zeromq.org/bindings:java).
+
+Alternatively, there are two prebuilt packages to download, but I could not get them to work:
+[ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe) &bull;
+[JZQMQ Win64](http://miru.hk/archive/JZMQ-2.1.10-win64.exe)
+
 # Running the Akka ZeroMQ Demo
-If running from IntelliJ or Eclipse, launch the programs from <tt>target/scala-2.9.1-1/classes</tt>
-so <tt>application.conf</tt> and <tt>common.conf</tt> are found.
-You will also need to add an OS-specific definion to VM Options in your Run/Debug configuration.
+You will need to add an OS-specific definion to VM Options in your Run/Debug configuration.
 For Linux, the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
 
 If you prefer to launch from <tt>sbt</tt>, modify your <tt>sbt</tt> script so as to add a parameter called <tt>$JAVA_OPTS</tt>.
@@ -74,14 +76,24 @@ Here is my <tt>sbt</tt> script, which will work on any OS that supports <tt>bash
 java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M $JAVA_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 ````
 
-To run the program, first set <tt>java.library.path</tt>; this is an OS-specific setting.
-Here is the proper setting for Linux:
+To run each of the programs, first set <tt>java.library.path</tt>; this is an OS-specific setting.
+The proper setting for Linux is <tt>-Djava.library.path=/usr/local/lib</tt>.
+
+Launch the programs in three console sessions as follows:
 
 ````
 export JAVA_OPTS=-Djava.library.path=/usr/local/lib
-sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher' &
-sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber' &
-sbt 'run-main com.micronautics.zeromq.benchmark.LogSubscriber' &
+sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher'
+````
+
+````
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
+sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
+````
+
+````
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
+sbt 'run-main com.micronautics.zeromq.benchmark.LogSubscriber'
 ````
 
 You could also hard-code the setting for <tt>java.library.path</tt> into <tt>sbt</tt>, which would mean that your <tt>sbt</tt> script would be OS specific.
@@ -93,32 +105,35 @@ java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M -Djava.
 ````
 
 ### Go, Baby, Go!
-After launching all three programs, output might look something like the following.
+After launching <tt>HealthPublisher</tt>, output might look something like the following.
 
 ````
+$ sbt 'run-main com.micronautics.zeromq.benchmark.HealthPublisher'
 [info] Loading global plugins from /home/mslinn/.sbt/plugins
 [info] Loading project definition from /home/mslinn/work/zeromq-demo/project
-[info] Set current project to zeroMQDemo (in build file:/home/mslinn/work/zeromq-demo/)
-[info] Running Main
-Logger about to subscribe to health
-HeapAlerter about to subscribe to health.heap
-HeapAlerter got a Connecting
-Entered HealthProbe preStart()
-Logger got a Connecting
-HealthProbe got a Tick
-HealthProbe about to publish health.heap
-HeapAlerter got a ZMQMessage for health.heap
-Logger got a ZMQmessage for health.heap
-[INFO] [04/20/2012 00:28:27.23] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 9697856 bytes, at 00:28:27.011
-HealthProbe about to publish health.load
-Logger got a ZMQMessage health.load
-[INFO] [04/20/2012 00:28:27.28] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.11, at 00:28:27.011
-HealthProbe got a Tick
-HealthProbe about to publish health.heap
-HeapAlerter got a ZMQMessage for health.heap
-Logger got a ZMQmessage for health.heap
-[INFO] [04/20/2012 00:28:28.112] [default-akka.actor.default-dispatcher-5] [akka://default/user/logger] Used heap 10106240 bytes, at 00:28:28.110
-HealthProbe about to publish health.load
-Logger got a ZMQMessage health.load
-[INFO] [04/20/2012 00:28:28.113] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.02, at 00:28:28.110
+[info] Set current project to zeroMQBenchmark (in build file:/home/mslinn/work/zeromq-demo/)
+[info] Running com.micronautics.zeromq.benchmark.HealthPublisher
+...
 ````
+
+Launch <tt>LogSubscriber</tt> next. Output might look something like the following.
+
+````
+$ sbt 'run-main com.micronautics.zeromq.benchmark.LogSubscriber'
+[info] Loading global plugins from /home/mslinn/.sbt/plugins
+[info] Loading project definition from /home/mslinn/work/zeromq-demo/project
+[info] Set current project to zeroMQBenchmark (in build file:/home/mslinn/work/zeromq-demo/)
+[info] Running com.micronautics.zeromq.benchmark.LogSubscriber
+Logger got a Connecting
+[INFO] [04/20/2012 20:18:57.491] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 8726728 bytes, at 20:18:57.482
+[INFO] [04/20/2012 20:18:57.494] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.53, at 20:18:57.482
+[INFO] [04/20/2012 20:18:58.583] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 8726792 bytes, at 20:18:58.582
+[INFO] [04/20/2012 20:18:58.583] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.53, at 20:18:58.582
+[INFO] [04/20/2012 20:18:59.683] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 8726856 bytes, at 20:18:59.682
+[INFO] [04/20/2012 20:18:59.683] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.53, at 20:18:59.682
+[INFO] [04/20/2012 20:19:00.783] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Used heap 8777944 bytes, at 20:19:00.782
+[INFO] [04/20/2012 20:19:00.783] [default-akka.actor.default-dispatcher-2] [akka://default/user/logger] Load average 1.53, at 20:19:00.782
+...
+````
+
+<tt>HeapSubscriber</tt> won't generate output unless there is a problem, or the log level is increased to debug.
