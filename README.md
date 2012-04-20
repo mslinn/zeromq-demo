@@ -80,7 +80,7 @@ java -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1536m -Xmx512M -Xss2M $JAVA_O
 To run each of the programs, first set <tt>java.library.path</tt>; this is an OS-specific setting.
 The proper setting for Linux is <tt>-Djava.library.path=/usr/local/lib</tt>.
 
-Launch the programs in three console sessions as follows:
+Launch the programs in three console sessions. For Linux, do the following:
 
 ````
 export JAVA_OPTS=-Djava.library.path=/usr/local/lib
@@ -138,13 +138,12 @@ Logger got a Connecting
 ````
 
 <tt>HeapSubscriber</tt> won't generate output unless there is a problem, or the log level is increased to debug.
-<tt>src/main/resources/application.conf-</tt> has been provided to make this easy.
+[<tt>src/main/resources/application.conf-</tt>](https://github.com/mslinn/zeromq-demo/blob/master/src/main/resources/application.conf-) has been provided to make this easy.
 Simply rename that file and start the apps that you want to run with debug logging enabled, as follows:
 
 ````
-mv src/main/resources/application.conf{-,}
-export JAVA_OPTS=-Djava.library.path=/usr/local/lib
-sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
+$ mv src/main/resources/application.conf{-,}
+$ export JAVA_OPTS=-Djava.library.path=/usr/local/lib
 $ sbt 'run-main com.micronautics.zeromq.benchmark.HeapSubscriber'
 [info] Loading global plugins from /home/mslinn/.sbt/plugins
 [info] Loading project definition from /home/mslinn/work/zeromq-demo/project
