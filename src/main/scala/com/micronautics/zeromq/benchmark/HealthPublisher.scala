@@ -1,16 +1,12 @@
 package com.micronautics.zeromq.benchmark
 
 import akka.serialization.SerializationExtension
-import akka.util.duration.intToDurationInt
 import akka.zeromq.zeromqSystem
-import akka.zeromq.Bind
-import akka.zeromq.Frame
-import akka.zeromq.SocketType
-import akka.zeromq.ZMQMessage
-import java.lang.management.ManagementFactory
+import akka.zeromq.{Bind, Frame, SocketType, ZMQMessage}
 import com.micronautics.zeromq.{Load, Heap, Tick}
 import com.micronautics.util.ByteFormatter
-import akka.actor._
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
+import java.lang.management.ManagementFactory
 
 class HealthPublisher extends Actor with ActorLogging {
   val pubSocket = context.system.newSocket(SocketType.Pub, Bind("tcp://127.0.0.1:1235"))

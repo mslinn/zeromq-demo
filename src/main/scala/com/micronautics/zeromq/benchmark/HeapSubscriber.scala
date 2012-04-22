@@ -1,16 +1,9 @@
 package com.micronautics.zeromq.benchmark
 
-import akka.actor.Actor
-import akka.actor.ActorLogging
-import akka.actor.ActorSystem
-import akka.actor.Props
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.serialization.SerializationExtension
 import akka.zeromq.zeromqSystem
-import akka.zeromq.Connect
-import akka.zeromq.Listener
-import akka.zeromq.SocketType
-import akka.zeromq.Subscribe
-import akka.zeromq.ZMQMessage
+import akka.zeromq.{Connect, Listener, SocketType, Subscribe, ZMQMessage}
 import com.micronautics.zeromq.Heap
 
 /** Subscriber keeps track of used heap and warns if too much heap is used.

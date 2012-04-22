@@ -1,21 +1,13 @@
 package com.micronautics.zeromq.benchmark
 
-import akka.actor.Actor
-import akka.actor.ActorLogging
-import akka.actor.ActorSystem
-import akka.actor.Props
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.serialization.SerializationExtension
-import akka.zeromq.zeromqSystem
-import akka.zeromq.Connect
-import akka.zeromq.Listener
-import akka.zeromq.SocketType
-import akka.zeromq.Subscribe
-import akka.zeromq.ZMQMessage
+import akka.zeromq.{zeromqSystem, Connect, Listener, SocketType, Subscribe, ZMQMessage}
 import java.text.SimpleDateFormat
 import java.util.Date
 import com.micronautics.zeromq.{Heap, Load}
 
-/** Subscriber that logs the information.
+/**Subscriber that logs the information.
  * It subscribes to all topics starting with "health", i.e. both Heap and Load events. */
 class LogSubscriber extends Actor with ActorLogging {
   log.debug("LogSubscriber about to subscribe to health")
