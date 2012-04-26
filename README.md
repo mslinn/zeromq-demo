@@ -25,7 +25,7 @@ sudo apt-get install libtool autoconf automake uuid-dev e2fsprogs
 git clone git://github.com/zeromq/libzmq.git
 cd libzmq
 ./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
-sudo cp src/.libs/libzmq.so /usr/lib
+sudo cp src/.libs/libzmq.so /usr/local/lib
 sudo ldconfig -v
 ls -al /usr/local/lib/libzmq.*
 cd ..
