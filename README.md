@@ -26,7 +26,7 @@ git clone git://github.com/zeromq/libzmq.git
 cd libzmq
 ./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
 sudo cp src/.libs/libzmq.so /usr/lib
-sudo ldconfig
+sudo ldconfig -v
 ls -al /usr/local/lib/libzmq.*
 cd ..
 ````
