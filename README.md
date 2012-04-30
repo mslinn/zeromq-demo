@@ -2,7 +2,9 @@ Working version of [Akka 2.0 ZeroMQ sample code](http://doc.akka.io/docs/akka/2.
 implemented as three programs: a publisher and two subscribers.
 I added throughput display (messages/second and bytes/second), and debug-level log statements so progress when running could be apparent.
 
-Before the program can run, ZeroMQ and its (Java bindings)[http://www.zeromq.org/bindings:java] need to be built and installed. 
+Before the program can run, ZeroMQ and its [Java bindings](http://www.zeromq.org/bindings:java) need to be built and installed.
+The Java bindings consist of `zmq.jar` PLUS the libraries that get built at the same time.
+Be sure you have built the Java bindings on your machine before specifying `zmq.jar` as a dependency to your project.
 
 ## Ubuntu
 On Ubuntu, it is easy to build both packages from source, if you follow the proper recipe (below).
@@ -63,12 +65,11 @@ Now build `zmq.jar`, which will contain the Java bindings, as well as other nece
 You need to follow this procedure at least once on your computer so the necessary libraries are installed into /usr/local/lib.
 Once you've done that, you can use `lib/zmq.jar`, also created by this procedure, in your other projects.
 
-Install the Java Developer Package from Apple's ADC site: http://connect.apple.com/; see Downloads / Java
+Install the Java Developer Package from Apple's ADC site: http://connect.apple.com/; see __Downloads / Java__.
 Apple's docs say:
-
-    The Java Developer package puts an additional copy of the Java SE 6 bundle in /Library/Java/JavaVirtualMachines/. This copy is installable without disturbing the existing system JDK.
-
-I downloaded *Java for Mac OS X 10.6 Update 8 Developer Package* download dated April 19, 2012.
+_The Java Developer package puts an additional copy of the Java SE 6 bundle in `/Library/Java/JavaVirtualMachines/`
+This copy is installable without disturbing the existing system JDK._
+I downloaded __Java for Mac OS X 10.6 Update 8 Developer Package__ download dated April 19, 2012.
 
 Set `JAVA_HOME` to point to the new JDK; it is a good idea to put this in `.profile`.
 
@@ -86,7 +87,7 @@ cd jzmq
 sudo ls -alF /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
 
-You might want to put this into `.profile` as well:
+I put this into `.profile`, to use in scripts that kick off Java programs, so the Java bindings are found:
 
 ````
 export JAVA_OPTS=-Djava.library.path=/usr/local/lib
@@ -97,13 +98,14 @@ Building ZeroMQ and the Java bindings on Windows 7 64 bit requires the non-free 
 Here are instructions for building [ZeroMQ](http://www.zeromq.org/docs:windows-installations)
 and [Java bindings](http://www.zeromq.org/bindings:java).
 
-Alternatively, there are two prebuilt packages to download, but I could not get them to work:
+Alternatively, there are two prebuilt packages to download, but I could not get them to work.
+I admit that I did not try very hard.
 [ZeroMQ Win64](http://miru.hk/archive/ZeroMQ-2.1.10-win64.exe) &bull;
 [JZQMQ Win64](http://miru.hk/archive/JZMQ-2.1.10-win64.exe)
 
 # Running the Akka ZeroMQ Demo
 You will need to add an OS-specific definion to VM Options in your Run/Debug configuration.
-For Linux and Mac the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
+For Linux and Mac, the magic incantation is: <tt>-Djava.library.path=/usr/local/lib</tt>
 
 If you prefer to launch from <tt>sbt</tt>, modify your <tt>sbt</tt> script so as to add a parameter called <tt>$JAVA_OPTS</tt>.
 Here is my <tt>sbt</tt> script, which will work on any OS that supports <tt>bash</tt>:
