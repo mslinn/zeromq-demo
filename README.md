@@ -31,7 +31,9 @@ ls -al /usr/local/lib/libzmq.*
 cd ..
 ````
 
-Now build <tt>zmq.jar</tt>, which will contain the Java bindings, or use <tt>lib/zmq.jar</tt> from this project.
+Now build `zmq.jar`, which will contain the Java bindings, as well as other necessary support libraries.
+You need to follow this procedure at least once on your computer so the necessary libraries are installed into /usr/local/lib.
+Once you've done that, you can use `lib/zmq.jar`, also created by this procedure, in your other projects.
 
 ````
 # Verify that JAVA_HOME environment variable is correctly set
@@ -43,17 +45,51 @@ cd jzmq
 ls -al /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
 
-Ideally, Sonatype would one day host <tt>zmq.jar</tt> their repository.
-Until then, you could host <tt>zmq.jar</tt> in your own repository, or you could just copy <tt>zmq.jar</tt>
-to your sbt project's <tt>lib/</tt> directory, where unmanaged dependencies live.
-For now, the Java bindings are checked into this project as <tt>lib/zmq.jar</tt>.
-
-## Mac
-On Mac it is really easy to build ZeroMQ from source.
-You will also need <tt>zmq.jar</tt>; you could get it from this project.
+I put this into `.profile`, to use in scripts that kick off Java programs, so the Java bindings are found:
 
 ````
-brew install zeromq
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
+````
+
+## Mac
+On Mac it is easy to build ZeroMQ from source:
+
+````
+brew install zeromq pkg-config
+sudo ln -s /usr/local/share/aclocal/pkg.m4 /usr/share/aclocal/pkg.m4
+````
+
+Now build `zmq.jar`, which will contain the Java bindings, as well as other necessary support libraries.
+You need to follow this procedure at least once on your computer so the necessary libraries are installed into /usr/local/lib.
+Once you've done that, you can use `lib/zmq.jar`, also created by this procedure, in your other projects.
+
+Install the Java Developer Package from Apple's ADC site: http://connect.apple.com/; see Downloads / Java
+Apple's docs say:
+
+    The Java Developer package puts an additional copy of the Java SE 6 bundle in /Library/Java/JavaVirtualMachines/. This copy is installable without disturbing the existing system JDK.
+
+I downloaded *Java for Mac OS X 10.6 Update 8 Developer Package* download dated April 19, 2012.
+
+Set `JAVA_HOME` to point to the new JDK; it is a good idea to put this in `.profile`.
+
+````
+export JAVA_HOME=$(/usr/libexec/java_home)
+````
+
+This next part is exactly the same as for building the Linux libraries; the resulting libraries are even installed into the same directories.
+
+````
+# Clone the github repository for the ZeroMQ Java bindings and build the project
+git clone https://github.com/zeromq/jzmq.git
+cd jzmq
+./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
+sudo ls -alF /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
+````
+
+You might want to put this into `.profile` as well:
+
+````
+export JAVA_OPTS=-Djava.library.path=/usr/local/lib
 ````
 
 ## Windows
@@ -67,7 +103,7 @@ Alternatively, there are two prebuilt packages to download, but I could not get 
 
 # Running the Akka ZeroMQ Demo
 You will need to add an OS-specific definion to VM Options in your Run/Debug configuration.
-For Linux, the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
+For Linux and Mac the magic incantation is <tt>-Djava.library.path=/usr/local/lib</tt>
 
 If you prefer to launch from <tt>sbt</tt>, modify your <tt>sbt</tt> script so as to add a parameter called <tt>$JAVA_OPTS</tt>.
 Here is my <tt>sbt</tt> script, which will work on any OS that supports <tt>bash</tt>:
