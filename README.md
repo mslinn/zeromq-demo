@@ -62,16 +62,17 @@ sudo ln -s /usr/local/share/aclocal/pkg.m4 /usr/share/aclocal/pkg.m4
 ````
 
 Now build `zmq.jar`, which will contain the Java bindings, as well as other necessary support libraries.
-You need to follow this procedure at least once on your computer so the necessary libraries are installed into /usr/local/lib.
+You need to follow this procedure at least once on your computer so the necessary libraries are installed into `/usr/local/lib`.
 Once you've done that, you can use `lib/zmq.jar`, also created by this procedure, in your other projects.
 
-Install the Java Developer Package from Apple's ADC site: http://connect.apple.com/; see __Downloads / Java__.
-Apple's docs say:
-_The Java Developer package puts an additional copy of the Java SE 6 bundle in `/Library/Java/JavaVirtualMachines/`
+Install the Java Developer Package from Apple's ADC site: http://connect.apple.com/,
+then navigate to __Downloads / Java__. Apple's docs say:
+_The Java Developer package puts an additional copy of the Java SE 6 bundle in `/Library/Java/JavaVirtualMachines/`.
 This copy is installable without disturbing the existing system JDK._
-I downloaded __Java for Mac OS X 10.6 Update 8 Developer Package__ download dated April 19, 2012.
+FYI, I downloaded __Java for Mac OS X 10.6 Update 8 Developer Package__, dated April 19, 2012.
 
 Set `JAVA_HOME` to point to the new JDK; it is a good idea to put this in `.profile`.
+Yes, you need to provide the enclosing `$()`.
 
 ````
 export JAVA_HOME=$(/usr/libexec/java_home)
