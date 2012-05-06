@@ -47,6 +47,17 @@ cd jzmq
 ls -al /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
 ````
 
+Output should look something like this; yes, you need all these files:
+
+````
+-rw-r--r-- 1 root root 451282 2012-04-10 09:29 /usr/local/lib/libjzmq.a
+-rwxr-xr-x 1 root root    992 2012-04-10 09:29 /usr/local/lib/libjzmq.la
+lrwxrwxrwx 1 root root     16 2012-04-10 09:29 /usr/local/lib/libjzmq.so -> libjzmq.so.0.0.0
+lrwxrwxrwx 1 root root     16 2012-04-10 09:29 /usr/local/lib/libjzmq.so.0 -> libjzmq.so.0.0.0
+-rwxr-xr-x 1 root root 206959 2012-04-10 09:29 /usr/local/lib/libjzmq.so.0.0.0
+-rw-r--r-- 1 root root  21687 2012-04-10 09:29 /usr/local/share/java/zmq.jar
+````
+
 I put this into `.profile`, to use in scripts that kick off Java programs, so the Java bindings are found:
 
 ````
