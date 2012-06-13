@@ -21,6 +21,7 @@ sudo aptitude install libzmq-dev
 
 ### Building from source
 First build ZeroMQ.
+`autogen.sh` is optional; it speeds up the process, but because of incompatibility introduced with Ubuntu 12.04, don't run `autogen.sh`.
 
 ````
 sudo apt-get install libtool autoconf automake uuid-dev e2fsprogs
@@ -30,6 +31,21 @@ cd libzmq
 sudo cp src/.libs/libzmq.so /usr/local/lib
 sudo ldconfig -v
 ls -al /usr/local/lib/libzmq.*
+````
+
+Output should show all of the following files:
+
+````
+-rw-r--r-- 1 root root 6227178 2012-06-13 10:12 /usr/local/lib/libzmq.a
+-rwxr-xr-x 1 root root     943 2012-06-13 10:12 /usr/local/lib/libzmq.la
+lrwxrwxrwx 1 root root      15 2012-06-13 10:12 /usr/local/lib/libzmq.so -> libzmq.so.3.0.0
+lrwxrwxrwx 1 root root      15 2012-06-13 10:12 /usr/local/lib/libzmq.so.3 -> libzmq.so.3.0.0
+-rwxr-xr-x 1 root root 2509876 2012-06-13 10:12 /usr/local/lib/libzmq.so.3.0.0
+````
+
+Move up a directory:
+
+````
 cd ..
 ````
 
