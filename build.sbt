@@ -10,12 +10,10 @@ scalaVersion := "2.9.1-1"
 scalacOptions ++= Seq("-deprecation")
 
 resolvers ++= Seq(
-  //"Typesafe Snapshots"    at "http://repo.typesafe.com/typesafe/snapshots",
-  "Typesafe Releases"     at "http://repo.typesafe.com/typesafe/releases"
+  "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
 )
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %  "akka-actor"                 % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-remote"                % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-kernel"                % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-slf4j"                 % "2.0.1" withSources(),
