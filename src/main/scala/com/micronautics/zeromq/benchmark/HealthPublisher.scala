@@ -7,6 +7,7 @@ import com.micronautics.zeromq.{Load, Heap, Tick}
 import com.micronautics.util.ByteFormatter
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import java.lang.management.ManagementFactory
+import com.typesafe.config.ConfigFactory
 
 class HealthPublisher extends Actor with ActorLogging {
   val pubSocket = context.system.newSocket(SocketType.Pub, Bind("tcp://127.0.0.1:1235"))
@@ -69,6 +70,28 @@ class HealthPublisher extends Actor with ActorLogging {
 }
 
 object HealthPublisher extends App {
-  val system = ActorSystem()
+  //system = ActorSystem() // uncomment to run without remote transport, and comment out remote transport section
+
+  // start of definition for remote transport
+  val strConf = """
+                  | akk.remote.transport = "akka.remote.netty.NettyRemoteTransport"
+                  | akka.remote.netty.hostname = "127.0.0.1"
+                  | akka.remote.netty.port = 2000
+                  | """.stripMargin
+
+   val myConfig = ConfigFactory.parseString(strConf)
+   val regularConfig = ConfigFactory.load()
+   val combined = myConfig.withFallback(regularConfig)
+   val complete = ConfigFactory.load(combined)
+   val system = ActorSystem("default", complete)
+
+  val a = system.settings.config.getObject("akka.zeromq")
+  val y = system.settings.config.getObject("akka.remote")
+  val z = system.settings.config.getObject("akka.remote.netty")
+
+  println("Running at " + system.settings.config.getString("akka.remote.netty.hostname") + ":" +
+          system.settings.config.getString("akka.remote.netty.port"))
+  // end of definition for remote transport
+
   val healthPublisherActorRef = system.actorOf(Props[HealthPublisher], name = "health")
 }

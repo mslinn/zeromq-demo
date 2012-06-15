@@ -5,6 +5,7 @@ import akka.serialization.SerializationExtension
 import akka.zeromq.zeromqSystem
 import akka.zeromq.{Connect, Listener, SocketType, Subscribe, ZMQMessage}
 import com.micronautics.zeromq.Heap
+import com.typesafe.config.ConfigFactory
 
 /** Subscriber keeps track of used heap and warns if too much heap is used.
   * It only subscribes to Heap events. */
@@ -31,6 +32,23 @@ class HeapSubscriber extends Actor with ActorLogging {
 }
 
 object HeapSubscriber extends App {
-  val system = ActorSystem()
+  //system = ActorSystem() // uncomment to run without remote transport, and comment out remote transport section
+
+  // start of definition for remote transport
+  val strConf = """
+                   | akka.remote.netty.hostname = "127.0.0.1"
+                   | akka.remote.netty.port = 2002
+                   | """.stripMargin
+
+  val myConfig = ConfigFactory.parseString(strConf)
+  val regularConfig = ConfigFactory.load()
+  val combined = myConfig.withFallback(regularConfig)
+  val complete = ConfigFactory.load(combined)
+  val system = ActorSystem("default", complete)
+
+  println("Running at " + system.settings.config.getString("akka.remote.netty.hostname") + ":" +
+          system.settings.config.getString("akka.remote.netty.port"))
+  // end of definition for remote transport
+
   val heapAlerterActorRef = system.actorOf(Props[HeapSubscriber], name = "alerter")
 }

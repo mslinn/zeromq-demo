@@ -6,6 +6,7 @@ import akka.zeromq.{zeromqSystem, Connect, Listener, SocketType, Subscribe, ZMQM
 import java.text.SimpleDateFormat
 import java.util.Date
 import com.micronautics.zeromq.{Heap, Load}
+import com.typesafe.config.ConfigFactory
 
 /**Subscriber that logs the information.
  * It subscribes to all topics starting with "health", i.e. both Heap and Load events. */
@@ -38,6 +39,23 @@ class LogSubscriber extends Actor with ActorLogging {
 }
 
 object LogSubscriber extends App {
-  val system = ActorSystem()
+  //system = ActorSystem() // uncomment to run without remote transport, and comment out remote transport section
+
+  // start of definition for remote transport
+  val strConf = """
+                   | akka.remote.netty.hostname = "127.0.0.1"
+                   | akka.remote.netty.port = 2001
+                   | """.stripMargin
+
+  val myConfig = ConfigFactory.parseString(strConf)
+  val regularConfig = ConfigFactory.load()
+  val combined = myConfig.withFallback(regularConfig)
+  val complete = ConfigFactory.load(combined)
+  val system = ActorSystem("default", complete)
+
+  println("Running at " + system.settings.config.getString("akka.remote.netty.hostname") + ":" +
+          system.settings.config.getString("akka.remote.netty.port"))
+  // end of definition for remote transport
+
   val loggerActorRef = system.actorOf(Props[LogSubscriber], name = "logger")
 }
