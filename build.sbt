@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %  "akka-slf4j"                 % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-zeromq"                % "2.0.1" withSources(),
   "ch.qos.logback"    %  "logback-classic"            % "1.0.0" withSources(),
-  "org.zeromq"        %  "zeromq-scala-binding_2.9.1" % "0.0.8-SNAPSHOT" withSources()
+  "org.zeromq"        %  "zeromq-scala-binding_2.9.1" % "0.0.6" withSources()
 )
 
 seq(assemblySettings: _*)
