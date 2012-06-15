@@ -85,10 +85,6 @@ object HealthPublisher extends App {
    val complete = ConfigFactory.load(combined)
    val system = ActorSystem("default", complete)
 
-  val a = system.settings.config.getObject("akka.zeromq")
-  val y = system.settings.config.getObject("akka.remote")
-  val z = system.settings.config.getObject("akka.remote.netty")
-
   println("Running at " + system.settings.config.getString("akka.remote.netty.hostname") + ":" +
           system.settings.config.getString("akka.remote.netty.port"))
   // end of definition for remote transport
