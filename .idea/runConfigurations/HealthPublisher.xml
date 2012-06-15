@@ -23,6 +23,8 @@
       <option name="LOCAL" value="true" />
     </RunnerSettings>
     <ConfigurationWrapper RunnerId="Debug" />
-    <method />
+    <method>
+      <option name="SBT.BeforeRunTask" enabled="true" action="products" runInCurrentModule="false" />
+    </method>
   </configuration>
 </component>
