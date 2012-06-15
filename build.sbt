@@ -7,7 +7,7 @@ version := "0.2"
 
 scalaVersion := "2.9.1-1"
 
-scalacOptions ++= Seq("-deprecation")
+scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 resolvers ++= Seq(
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
@@ -15,10 +15,11 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %  "akka-kernel"                % "2.0.1" withSources(),
+  "com.typesafe.akka" %  "akka-remote"                % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-slf4j"                 % "2.0.1" withSources(),
   "com.typesafe.akka" %  "akka-zeromq"                % "2.0.1" withSources(),
   "ch.qos.logback"    %  "logback-classic"            % "1.0.0" withSources(),
-  "org.zeromq"        %  "zeromq-scala-binding_2.9.1" % "0.0.6" withSources()
+  "org.zeromq"        %  "zeromq-scala-binding_2.9.1" % "0.0.8-SNAPSHOT" withSources()
 )
 
 seq(assemblySettings: _*)
