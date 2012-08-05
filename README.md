@@ -109,7 +109,7 @@ This next part is exactly the same as for building the Linux libraries; the resu
 
 ````
 # Clone the github repository for the ZeroMQ Java bindings and build the project
-git clone https://github.com/zeromq/jzmq.git
+git clone git://github.com/zeromq/jzmq.git
 cd jzmq
 ./autogen.sh && ./configure && make && sudo make install && echo ":: ALL OK ::"
 sudo ls -alF /usr/local/lib/*jzmq* /usr/local/share/java/*zmq*
